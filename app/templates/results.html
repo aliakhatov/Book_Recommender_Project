@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="static/basic.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous">
+    <a href = "{{ url_for('starter') }}">Going back to Top Books Page</a>
+    <style>
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    background: #0b91e8;
+    margin: 10px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+    padding: 2px 16px;
+}
+
+.card-wrapper {
+    display: flex;
+}
+
+@keyframes color {
+  0%   { background: #1a2d2d; }
+  20%  { background: #24be24; }
+  40%  { background: #141703; }
+  60%  { background: #edc034; }
+  80%  { background: #164117; }
+  100% { background: #194f4f; }
+}
+
+body {
+  background: #0baeae; /* Fallback */
+  animation: color 15s infinite linear;
+  text-align: center;
+  padding: 2em;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Kavoon', sans-serif;
+  font-size: 2.5em;
+  color: white;
+}
+
+</style>
+
+</head>
+
+<body>
+    <hr/>
+
+    <h2 style="color:white;">Your Recommendations: Enjoy!</h2>
+    <div class="column" >
+        <div class="card-wrapper">
+            <div class="row row-cols-6">
+                {% for a_book in book_dict%}
+                    <div class="card" id={{a_book['title']}}>
+                        <img src={{a_book['image_l']}} style="width:100%;height:300px;">
+                        <div class="container" style="height: 220px">
+                            <h6><b>{{a_book['title']}}</b></h6>
+                            <h6 style="left: 25%;bottom: 40px;position: absolute;
+                      transform: translateX(-5%);font-weight: bold;"> {{a_book["author"]}}</h6>
+                            <h6> Year: {{a_book["year"]}}</h6>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        <div>
+
+        </div>
+
+        </div>
+    </div>
+
+    <h3>
+
+    </h3>
+</body>
+
+</html>

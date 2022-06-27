@@ -1,0 +1,94 @@
+#BUCKET_NAME = '2022-msia-423-akhatov-alisher'
+#PREFIX = 'data/'
+#RATINGS_FILE = "BX-Book-Ratings.csv"
+#BOOK_FILE = "BX-Books.csv"
+#USERS_FILE = "BX-Users.csv"
+
+DEFAULT_WEB_URL:
+  http://www2.informatik.uni-freiburg.de/~cziegler/BX/BX-CSV-Dump.zip
+
+TOP_N_BOOKS: 20
+
+
+preprocess:
+
+  rating_cols:
+    'User-ID': 'uid'
+    'ISBN': 'isbn'
+    'Book-Rating': 'rating'
+
+  books_cols:
+    'ISBN': 'isbn'
+    'Book-Title': 'title'
+    'Book-Author': 'author'
+    'Year-Of-Publication': 'year'
+    'Publisher': 'publisher'
+    'Image-URL-S': 'image_s'
+    'Image-URL-M': 'image_m'
+    'Image-URL-L': 'image_l'
+
+  group_by:
+    rating: mean
+    rating_count: mean
+
+  user_cols:
+    'User-ID': 'uid'
+    'Location': 'location'
+    'Age': 'age'
+
+  users_threshold: 150
+  rating_threshold: 50
+
+  reading_params:
+    delimiter: ";"
+    encoding: "latin1"
+    error_bad_lines: False
+    low_memory: False
+
+generate_features:
+  rating_threshold: 25
+
+clean_file_names:
+  clean_data: "clean_df.csv"
+  top_n_books: "top_n_books.csv"
+  train_book_mx: "train_pivot_matrix.csv"
+  test_data: "test_df.csv"
+
+raw_file_names:
+    ratings_file: "BX-Book-Ratings.csv"
+    books_file: "BX-Books.csv"
+    users_file: "BX-Users.csv"
+
+result_file_names:
+  recommendations: "recommendations.txt"
+  metrics: "model_metrics.txt"
+
+# Configuration for downloading from  s3
+# Configuration for uploading data to s3
+
+upload:
+  bucket_name: '2022-msia-423-akhatov-alisher'
+  prefix: 'data/'
+  key: 'games.json'
+
+model:
+  model_params:
+    n_neighbors: 4
+    algorithm: "brute"
+    metric: "cosine"
+
+  train_model_path: "models/nearest_neighbors_train.joblib"
+
+  sample_titles:
+    - "The Little Prince"
+    - "To Kill a Mockingbird"
+    - "The Secret Garden"
+
+  test_ratio: 0.1
+
+  random_seed: 12
+
+  number_of_evals: 3
+
+book_matrix_directory: "data/processed/train_pivot_matrix.csv"
+final_file_directory: "data/processed/clean_df.csv"
